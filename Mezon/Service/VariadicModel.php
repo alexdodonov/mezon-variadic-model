@@ -34,6 +34,8 @@ class VariadicModel
      */
     protected $configKey = 'variadic-model-config-key';
 
+    // TODO create class BaseModel (into separate package), use it here and extend ServiceModel from this class BaseModel
+    
     /**
      * Local model class name
      *
