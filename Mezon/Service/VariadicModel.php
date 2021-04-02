@@ -17,7 +17,7 @@ use Mezon\Transport\RequestParams;
 /**
  * Base class for all controllers
  */
-class VariadicModel
+class VariadicModel extends ServiceModel
 {
 
     /**
