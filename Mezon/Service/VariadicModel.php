@@ -34,6 +34,8 @@ class VariadicModel extends ServiceModel
      */
     protected $configKey = 'variadic-model-config-key';
 
+    // TODO make a list of model types, because we can use variations not only for ...
+    // ... local or remote calls, but also for blocking/non-blocking calls and so on
     /**
      * Local model class name
      *
