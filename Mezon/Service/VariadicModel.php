@@ -23,7 +23,7 @@ class VariadicModel extends ServiceModel
     /**
      * Real model
      *
-     * @var object
+     * @var ?object
      */
     private $realModel = null;
 
@@ -80,7 +80,7 @@ class VariadicModel extends ServiceModel
     /**
      * Method returns real model
      *
-     * @return object real model
+     * @return ?object real model
      */
     public function getRealModel(): object
     {

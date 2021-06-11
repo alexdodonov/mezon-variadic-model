@@ -9,6 +9,7 @@ use Mezon\Conf\Conf;
 use Mezon\Service\VariadicModel;
 use Mezon\Service\ServiceModel;
 
+/** @psalm-suppress PropertyNotSetInConstructor */
 class VariadicModelUnitTest extends TestCase
 {
 
