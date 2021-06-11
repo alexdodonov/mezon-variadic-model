@@ -81,6 +81,7 @@ class VariadicModelUnitTest extends TestCase
      *            setup method
      * @param string $expected
      *            expected type
+     * @psalm-param class-string $expected
      * @dataProvider constructorDataProvider
      */
     public function testConstructor(callable $setup, string $expected): void
