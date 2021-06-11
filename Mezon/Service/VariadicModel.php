@@ -82,7 +82,7 @@ class VariadicModel extends ServiceModel
      *
      * @return ?object real model
      */
-    public function getRealModel(): object
+    public function getRealModel(): ?object
     {
         return $this->realModel;
     }
