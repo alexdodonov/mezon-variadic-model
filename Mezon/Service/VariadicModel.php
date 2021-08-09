@@ -23,9 +23,9 @@ class VariadicModel extends ServiceModel
     /**
      * Real model
      *
-     * @var ?object
+     * @var object
      */
-    private $realModel = null;
+    private $realModel;
 
     /**
      * Config key to read settings
@@ -61,15 +61,15 @@ class VariadicModel extends ServiceModel
         $modelSetting = Conf::getConfigValue($this->configKey, 'local');
 
         if ($model !== null) {
-            $this->setRealModel($model);
+            $this->realModel = $model;
         } elseif ($modelSetting === 'local') {
-            $this->setRealModel(new $this->localModel());
+            $this->realModel = new $this->localModel();
         } elseif ($modelSetting === 'remote') {
-            $this->setRealModel(new $this->remoteModel());
+            $this->realModel = new $this->remoteModel();
         } elseif (is_string($modelSetting) && class_exists($modelSetting)) {
-            $this->setRealModel(new $modelSetting());
+            $this->realModel = new $modelSetting();
         } elseif (is_object($modelSetting)) {
-            $this->setRealModel($modelSetting);
+            $this->realModel = $modelSetting;
         } else {
             throw (new \Exception(
                 'Can not construct model from value ' .
@@ -80,9 +80,9 @@ class VariadicModel extends ServiceModel
     /**
      * Method returns real model
      *
-     * @return ?object real model
+     * @return object real model
      */
-    public function getRealModel(): ?object
+    public function getRealModel(): object
     {
         return $this->realModel;
     }
