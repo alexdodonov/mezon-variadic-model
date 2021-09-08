@@ -9,7 +9,10 @@ use Mezon\Conf\Conf;
 use Mezon\Service\VariadicModel;
 use Mezon\Service\ServiceModel;
 
-/** @psalm-suppress PropertyNotSetInConstructor */
+/**
+ *
+ * @psalm-suppress PropertyNotSetInConstructor
+ */
 class VariadicModelUnitTest extends TestCase
 {
 
@@ -104,5 +107,21 @@ class VariadicModelUnitTest extends TestCase
         // setup
         Conf::setConfigValue('variadic-model-config-key', 'some model');
         new TestingVariadicModel();
+    }
+
+    /**
+     * Testing method setRealModel
+     */
+    public function testSetRealModel(): void
+    {
+        // setup
+        Conf::setConfigValue('variadic-model-config-key', ServiceModel::class);
+        $model = new TestingVariadicModel();
+
+        // test body
+        $model->setRealModel(new DbServiceModel());
+
+        // assertions
+        $this->assertInstanceOf(DbServiceModel::class, $model->getRealModel());
     }
 }
