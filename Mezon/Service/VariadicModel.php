@@ -58,7 +58,7 @@ class VariadicModel extends ServiceModel
      */
     public function __construct($model = null)
     {
-        $modelSetting = Conf::getConfigValue($this->configKey, 'local');
+        $modelSetting = Conf::getValue($this->configKey, 'local');
 
         if ($model !== null) {
             $this->realModel = $model;
