@@ -73,6 +73,14 @@ class VariadicModelUnitTest extends TestCase
                     return new TestingVariadicModel();
                 },
                 ServiceModel::class
+            ],
+            // #6, model from array of class names
+            [
+                function (): object {
+                    Conf::setConfigValue('variadic-model-config-key', 'new');
+                    return new TestingVariadicModelNew();
+                },
+                ServiceModel::class
             ]
         ];
     }

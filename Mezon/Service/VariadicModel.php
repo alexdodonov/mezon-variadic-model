@@ -34,8 +34,6 @@ class VariadicModel extends ServiceModel
      */
     protected $configKey = 'variadic-model-config-key';
 
-    // TODO make a list of model types, because we can use variations not only for ...
-    // ... local or remote calls, but also for blocking/non-blocking calls and so on
     /**
      * Local model class name
      *
@@ -51,6 +49,13 @@ class VariadicModel extends ServiceModel
     protected $remoteModel = ServiceModel::class;
 
     /**
+     * List of hiding models
+     *
+     * @var string[]
+     */
+    protected $models = [];
+
+    /**
      * Constructor
      *
      * @param mixed $model
@@ -58,18 +63,25 @@ class VariadicModel extends ServiceModel
      */
     public function __construct($model = null)
     {
-        $modelSetting = Conf::getValue($this->configKey, 'local');
+        $modelSetting = Conf::getValue($this->configKey, 'default');
 
         if ($model !== null) {
+            // set real model from constructor parameter
             $this->realModel = $model;
-        } elseif ($modelSetting === 'local') {
+        } elseif (is_object($modelSetting)) {
+            $this->realModel = $modelSetting;
+        } elseif (isset($this->models[$modelSetting])) {
+            // getting from $this->models
+            $modelClassName = $this->models[$modelSetting];
+            $this->realModel = new $modelClassName();
+        } elseif ($modelSetting === 'default' || $modelSetting === 'local') {
+            // use deprecated local model setting
             $this->realModel = new $this->localModel();
         } elseif ($modelSetting === 'remote') {
+            // remote
             $this->realModel = new $this->remoteModel();
         } elseif (is_string($modelSetting) && class_exists($modelSetting)) {
             $this->realModel = new $modelSetting();
-        } elseif (is_object($modelSetting)) {
-            $this->realModel = $modelSetting;
         } else {
             throw (new \Exception(
                 'Can not construct model from value ' .
