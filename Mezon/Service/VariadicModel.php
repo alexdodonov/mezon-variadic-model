@@ -23,7 +23,7 @@ class VariadicModel extends ServiceModel
     /**
      * Real model
      *
-     * @var object
+     * @var ServiceModel
      */
     private $realModel;
 
@@ -56,32 +56,49 @@ class VariadicModel extends ServiceModel
     protected $models = [];
 
     /**
-     * Constructor
+     * Trying to set real model
      *
-     * @param mixed $model
+     * @param object $realModel
      *            real model
      */
-    public function __construct($model = null)
+    private function trySetRealModel(object $realModel): void
     {
+        if ($realModel instanceof ServiceModel) {
+            $this->realModel = $realModel;
+        } else {
+            throw (new \Exception('Model must be derived from ServiceModel class', - 1));
+        }
+    }
+
+    /**
+     * Constructor
+     *
+     * @param ServiceModel $model
+     *            real model
+     * @psalm-suppress MixedMethodCall,
+     */
+    public function __construct(ServiceModel $model = null)
+    {
+        /** @var ?mixed $modelSetting */
         $modelSetting = Conf::getValue($this->configKey, 'default');
 
         if ($model !== null) {
             // set real model from constructor parameter
             $this->realModel = $model;
         } elseif (is_object($modelSetting)) {
-            $this->realModel = $modelSetting;
-        } elseif (isset($this->models[$modelSetting])) {
+            $this->trySetRealModel($modelSetting);
+        } elseif (is_string($modelSetting) && isset($this->models[$modelSetting])) {
             // getting from $this->models
             $modelClassName = $this->models[$modelSetting];
-            $this->realModel = new $modelClassName();
+            $this->trySetRealModel(new $modelClassName());
         } elseif ($modelSetting === 'default' || $modelSetting === 'local') {
             // use deprecated local model setting
-            $this->realModel = new $this->localModel();
+            $this->trySetRealModel(new $this->localModel());
         } elseif ($modelSetting === 'remote') {
             // remote
-            $this->realModel = new $this->remoteModel();
+            $this->trySetRealModel(new $this->remoteModel());
         } elseif (is_string($modelSetting) && class_exists($modelSetting)) {
-            $this->realModel = new $modelSetting();
+            $this->trySetRealModel(new $modelSetting());
         } else {
             throw (new \Exception(
                 'Can not construct model from value ' .
@@ -92,9 +109,9 @@ class VariadicModel extends ServiceModel
     /**
      * Method returns real model
      *
-     * @return object real model
+     * @return ServiceModel real model
      */
-    public function getRealModel(): object
+    public function getRealModel(): ServiceModel
     {
         return $this->realModel;
     }
@@ -102,10 +119,10 @@ class VariadicModel extends ServiceModel
     /**
      * Method sets real model
      *
-     * @param object $realModel
+     * @param ServiceModel $realModel
      *            real model
      */
-    public function setRealModel(object $realModel): void
+    public function setRealModel(ServiceModel $realModel): void
     {
         $this->realModel = $realModel;
     }

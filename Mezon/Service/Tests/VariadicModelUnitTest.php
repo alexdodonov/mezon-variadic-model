@@ -88,7 +88,7 @@ class VariadicModelUnitTest extends TestCase
     /**
      * Testing method
      *
-     * @param callable $setup
+     * @param callable():VariadicModel $setup
      *            setup method
      * @param string $expected
      *            expected type
