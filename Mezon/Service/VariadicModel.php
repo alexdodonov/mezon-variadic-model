@@ -63,11 +63,11 @@ class VariadicModel extends ServiceModel
      */
     private function trySetRealModel(object $realModel): void
     {
-        //if ($realModel instanceof ServiceModel) {
+        if ($realModel instanceof ServiceModel) {
             $this->realModel = $realModel;
-        //} else {
-        //    throw (new \Exception('Model must be derived from ServiceModel class', - 1));
-        //}
+        } else {
+            throw (new \Exception('Model must be derived from ServiceModel class', - 1));
+        }
     }
 
     /**
