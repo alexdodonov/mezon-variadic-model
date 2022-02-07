@@ -1,7 +1,6 @@
 <?php
 namespace Mezon\Service\Tests;
 
-use Mezon\Service\DbServiceModel;
 use Mezon\Service\VariadicModel;
 use Mezon\Service\ServiceModel;
 

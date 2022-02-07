@@ -102,7 +102,8 @@ class VariadicModel extends ServiceModel
         } else {
             throw (new \Exception(
                 'Can not construct model from value ' .
-                (is_string($modelSetting) ? $modelSetting : serialize($modelSetting))));
+                (is_string($modelSetting) ? $modelSetting : serialize($modelSetting)),
+                - 1));
         }
     }
 

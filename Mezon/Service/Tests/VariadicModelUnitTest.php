@@ -2,9 +2,7 @@
 namespace Mezon\Service\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Mezon\FieldsSet;
 use Mezon\Service\DbServiceModel;
-use Mezon\PdoCrud\Tests\PdoCrudMock;
 use Mezon\Conf\Conf;
 use Mezon\Service\VariadicModel;
 use Mezon\Service\ServiceModel;
@@ -105,15 +103,32 @@ class VariadicModelUnitTest extends TestCase
     }
 
     /**
-     * Testing exception
+     * Testing exception while passing invalid class name
      */
-    public function testException(): void
+    public function testExceptionInvalidClassName(): void
     {
         // assertions
         $this->expectException(\Exception::class);
+        $this->expectExceptionCode(- 1);
+        $this->expectExceptionMessage('Can not construct model from value some model');
 
         // setup
         Conf::setConfigValue('variadic-model-config-key', 'some model');
+        new TestingVariadicModel();
+    }
+
+    /**
+     * Testing exception while passing invalid class name
+     */
+    public function testExceptionInvalidObjectType(): void
+    {
+        // assertions
+        $this->expectException(\Exception::class);
+        $this->expectExceptionCode(- 1);
+        $this->expectExceptionMessage('Model must be derived from ServiceModel class');
+
+        // setup
+        Conf::setConfigValue('variadic-model-config-key', new \stdClass());
         new TestingVariadicModel();
     }
 
