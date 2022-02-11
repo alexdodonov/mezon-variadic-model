@@ -2,7 +2,6 @@
 namespace Mezon\Service;
 
 use Mezon\Conf\Conf;
-use Mezon\Transport\RequestParams;
 
 /**
  * Class VariadicModel
@@ -51,7 +50,7 @@ class VariadicModel extends ServiceModel
     /**
      * List of hiding models
      *
-     * @var string[]
+     * @var class-string[]
      */
     protected $models = [];
 

@@ -17,7 +17,7 @@ class TestingVariadicModelNew extends VariadicModel
     /**
      * List of models class names
      *
-     * @var string[]
+     * @var class-string[]
      */
     protected $models = [
         'new' => ServiceModel::class
